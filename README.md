@@ -1,5 +1,5 @@
 # c-codes
-SPOJ
+
 Codes from pl.spoj.com
 
 https://pl.spoj.com/problems/latwe/
