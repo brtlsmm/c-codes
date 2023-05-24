@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <math.h>
 
 using namespace std;
 
@@ -39,13 +40,15 @@ int main()
                 swap(punkty[i].second, punkty[k].second);
 
             }
-            if ((punkty[i].second - start.second) * (punkty[k].first - start.first) > (punkty[i].first - start.first) * (punkty[k].second - start.second)) // jezeli kat jest wiekszy zmien;
+            if ((punkty[i].second - start.second) * (punkty[k].first - start.first) == (punkty[i].first - start.first) * (punkty[k].second - start.second)) // jezeli kat jest wiekszy zmien;
             {
-                if (punkty[i].first - start.first > punkty[k].first - start.first)
+                if (pow((punkty[i].first - start.first), 2) + pow((punkty[i].second - start.second), 2) < pow((punkty[k].first - start.first), 2) + pow((punkty[k].second - start.second), 2))
                 {
                     swap(punkty[i].first, punkty[k].first);
                     swap(punkty[i].second, punkty[k].second);
                 }
+                
+
             }
         }
     }
