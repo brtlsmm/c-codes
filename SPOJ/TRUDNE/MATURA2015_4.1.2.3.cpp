@@ -4,28 +4,11 @@
 
 using namespace std;
 
-
 void peekline(ifstream& is, string& s)
 {
     streampos sp = is.tellg();
     getline(is, s);
     is.seekg(sp);
-}
-
-int binaryToDecimal(string str)
-{
-    long long dec_num = 0;
-    int power = 0;
-    long long n = str.length();
-
-    for (int i = n - 1; i >= 0; i--) {
-        if (str[i] == '1') {
-            dec_num += (1 << power);
-        }
-        power++;
-    }
-
-    return dec_num;
 }
 
 int main()
@@ -36,9 +19,9 @@ int main()
     long long jedynki = 0;
     long long podzielnosc_dwa = 0;
     long long podzielnosc_osiem = 0;
+    
     string min;
     string max;
-
     peekline(odczyt, min);
     peekline(odczyt, max);
 
@@ -46,45 +29,32 @@ int main()
     long long max_pos = 0;
     int pos = 0;
 
-    int tempmax = 0;
-    int tempmin = 0;
-
     while (!odczyt.eof())
     {
         pos++;
         odczyt >> liczba;
 
-        bool tempmaxok = 0;
-        bool tempminok = 0;
-        
-        for (int i = 0; i < liczba.length(); i++)
+        if (liczba.length() > max.length())
         {
-            while (tempmaxok == 0)
-            {
-                if (liczba[i] == '1')
-                {
-                    tempmax = i;
-                    tempmaxok = 1;
-                }
-            }
-            while (tempminok == 0)
-            {
-                if (liczba[i] == '1')
-                {
-                    tempmax = i;
-                    tempmaxok = 1;
-                }
-            }
-
+            max = liczba;
+            max_pos = pos;
         }
-
-
-       /*
-       if (binaryToDecimal(liczba) > binaryToDecimal(max))
+        else if (liczba.length() == max.length())
+        {
+            for (int i = 0; i < liczba.length(); i++)
             {
-                max = liczba;
-                max_pos = pos;
+                if (liczba[i] == '0' && max[i] != '0')
+                {
+                    i = liczba.length();
+                }
+                if (liczba[i] != '0' && max[i] == '0')
+                {
+                    max = liczba;
+                    max_pos = pos;
+                    i = liczba.length();
+                }
             }
+        }
 
        if (liczba.length() < min.length())
         {
@@ -93,13 +63,20 @@ int main()
         }
         else if (liczba.length() == min.length())
         {
-            if (binaryToDecimal(liczba) < binaryToDecimal(min))
-            {
-                min = liczba;
-                min_pos = pos;
-            }
+           for (int i = 0; i < liczba.length(); i++)
+           {
+               if (liczba[i] != '0' && min[i] == '0')
+               {
+                   i = liczba.length();
+               }
+               if (liczba[i] == '0' && min[i] != '0')
+               {
+                   min = liczba;
+                   min_pos = pos;
+                   i = liczba.length();
+               }
+           }
         }
-        */
         
         long long sumzero = 0;
         long long sumone = 0;
@@ -136,8 +113,9 @@ int main()
     zapis << "liczby z wieksza iloscia zer od jedynek: " << jedynki << endl;
     zapis << "liczby podzielne przez dwa: " << podzielnosc_dwa << endl;
     zapis << "liczby podzielne przez osiem: " << podzielnosc_osiem << endl;
-    cout << "najmniejsza liczba wraz z pozycja: " << min_pos << "\t" << min << endl;
-    cout << "najwieksza liczba wraz z pozycja: " << max_pos << "\t" << max << endl;
+    zapis << "najmniejsza liczba wraz z pozycja: " << min_pos << "\t" << endl;
+    zapis << "najwieksza liczba wraz z pozycja: " << max_pos << "\t" << endl;
+    cout << "kod jest ok" << endl;
 
 }
 
