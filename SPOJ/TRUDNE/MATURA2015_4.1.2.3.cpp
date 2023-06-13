@@ -4,11 +4,19 @@
 
 using namespace std;
 
+
+void peekline(ifstream& is, string& s)
+{
+    streampos sp = is.tellg();
+    getline(is, s);
+    is.seekg(sp);
+}
+
 int binaryToDecimal(string str)
 {
-    int dec_num = 0;
+    long long dec_num = 0;
     int power = 0;
-    int n = str.length();
+    long long n = str.length();
 
     for (int i = n - 1; i >= 0; i--) {
         if (str[i] == '1') {
@@ -20,7 +28,6 @@ int binaryToDecimal(string str)
     return dec_num;
 }
 
-
 int main()
 {
     string liczba;
@@ -31,30 +38,68 @@ int main()
     long long podzielnosc_osiem = 0;
     string min;
     string max;
-    string tempmin;
+
+    peekline(odczyt, min);
+    peekline(odczyt, max);
+
     long long min_pos = 0;
     long long max_pos = 0;
     int pos = 0;
 
-   
+    int tempmax = 0;
+    int tempmin = 0;
 
     while (!odczyt.eof())
     {
         pos++;
         odczyt >> liczba;
 
-        tempmin = liczba;
-
-        if (binaryToDecimal(liczba) > binaryToDecimal(max))
+        bool tempmaxok = 0;
+        bool tempminok = 0;
+        
+        for (int i = 0; i < liczba.length(); i++)
         {
-            max = liczba;
-            max_pos = pos;
+            while (tempmaxok == 0)
+            {
+                if (liczba[i] == '1')
+                {
+                    tempmax = i;
+                    tempmaxok = 1;
+                }
+            }
+            while (tempminok == 0)
+            {
+                if (liczba[i] == '1')
+                {
+                    tempmax = i;
+                    tempmaxok = 1;
+                }
+            }
+
         }
-        if (binaryToDecimal(liczba) < binaryToDecimal(min))
+
+
+       /*
+       if (binaryToDecimal(liczba) > binaryToDecimal(max))
+            {
+                max = liczba;
+                max_pos = pos;
+            }
+
+       if (liczba.length() < min.length())
         {
             min = liczba;
             min_pos = pos;
         }
+        else if (liczba.length() == min.length())
+        {
+            if (binaryToDecimal(liczba) < binaryToDecimal(min))
+            {
+                min = liczba;
+                min_pos = pos;
+            }
+        }
+        */
         
         long long sumzero = 0;
         long long sumone = 0;
